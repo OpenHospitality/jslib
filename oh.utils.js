@@ -1,0 +1,312 @@
+// Copyright 2012 Open Hospitality. All Rights Reserved.
+
+/**
+ * @fileoverview A script containing utility functions used throughout all sites
+ * @author sgravitz@openhospitality.com (Steve Gravitz), daniel@openhospitality.com (Daniel Mickleburgh)
+ * @module Utils
+ * @change SG 2012-02-10 Added "trim" method
+ */
+
+
+/**
+ * Namespace
+ * @type {Object}
+ */
+var Utils = Utils || {};
+
+/**
+ * @method dir enumerates properties of current obj.
+ * @param obj {Object} the object to enumerate
+ * @return {string} returns the trimmed string
+ */
+Utils.dir = function(obj) {
+    obj = obj || this;	
+	for(var propertyName in obj) {
+	    if (obj.hasOwnProperty(propertyName)) {
+	        console.log(propertyName, typeof obj[propertyName]);
+	        console.log(obj[propertyName]);
+	  	}    
+	}
+};
+
+/**
+ * @method trim removes any leading and trailing spaces from string.
+ * @param str {string} the string to trim
+ * @return {string} returns the trimmed string
+ */
+Utils.trim = function(str) {
+    var str = str.replace(/^\s\s*/, '')
+      , ws = /\s/
+      , i = str.length;
+
+    while (ws.test(str.charAt(--i)));
+    return str.slice(0, i + 1);
+};
+
+/**
+ * @method encodeParameter Replaces any space characters with the plus sign.
+ * @param value {string} the value to encode
+ * @return {string} returns the string from calling replace on value
+ */
+Utils.encodeParameter = function(value) {
+		return value.replace(' ','+');
+};
+
+/**
+ * @method makeOption Creates an opening and closing option tag.
+ * @param value {string} the option value.
+ * @param description {string} the option description - defaults to value if missing.
+ * @return {string} returns a string version of an html option element.
+ */
+Utils.makeOption = function(value, description) { 
+	return "<option value=\"" + value + "\">" + (description || value) + "</option>"; 
+};
+
+/**
+ * @method getPageFromUrl Splits the pathname by / 
+ * @return {object} Returns an array of the pathname split up by /
+ */
+Utils.getPageFromUrl = function(){
+	var parts = location.pathname.split('/')    
+	return parts[parts.length-1];                           
+}
+
+/**
+ * @method pad Inserts an integer before a value
+ * @param padChar {string} The integer you wish to place before the value passed.
+ * @param value {string} 
+ * @param length {string} Length of padding and value
+ * @return  
+ */
+Utils.pad =  function (padChar, value, length) {
+	var str = '' + value;
+	while (str.length < length) { str = padChar + str; }
+	return str;
+}
+
+/**
+ * @method padZero Inserts a 0 before the passed number.
+ * @param number {number}
+ * @param length {number}
+ * @return {number} Returns a padded integer. Ex. Pass in 5, the method returns 05.
+ */
+Utils.padZero = function (number, length) {
+	var str = '' + number;
+	while (str.length < length) { str = '0' + str; }
+	return str;
+}
+//+++ What does this method return?
+/**
+ * @method removeSelectOptions
+ * @param select {object}
+ * @return
+ */
+Utils.removeSelectOptions = function(select) {
+	while (select.childNodes.length > 1) {
+		select.removeChild(select.lastChild);
+	}
+}
+//+++ What param type does value accept?
+/**
+ * @method setSelected
+ * @param id {object}
+ * @param value
+ * @return  
+ */
+Utils.setSelected = function (id, value) {
+	var options = document.getElementById(id).getElementsByTagName("option");
+	for (var i = 0; i < options.length; i++) {
+		options[i].selected = options[i].value === value;
+	}
+}
+//+++
+/**
+ * @method stopEvent
+ * @param e {object}
+ * @return
+ */
+Utils.stopEvent = function(e) {
+	if (e.stopPropagation) e.stopPropagation();
+	else e.cancelBubble = true;
+
+	if (e.preventDefault) e.preventDefault();
+	else e.returnValue = false;
+}
+
+
+/**
+ * @method areDatesEqual
+ * @param dt1 {date} Pass the first date object to compare.
+ * @param dt2 {date} Pass the second date object to compare. 
+ * @return {Boolean} True if Y,M,D are the same for both, otherwise false.
+ */
+Utils.areDatesEqual = function(dt1, dt2) {
+		return (d1 === d2 ? true : false);
+};
+
+
+
+/**
+ * @method dateToYYYYMMDD
+ * @param dt {date} Pass a date object.
+ * @return Converts passed date to display YYYYMMDD.
+ */
+Utils.dateToYYYYMMDD = function(dt) {
+		return dt.getFullYear().toString() + ((dt.getMonth() + 1).toString().length === 1 ? "0" + (dt.getMonth() + 1).toString() : (dt.getMonth() + 1).toString()) + (dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString());
+}
+
+//+++ Does this return a string of a date object?
+/**
+ * @method dateToYYYYMM
+ * @param dt {date} Pass a date object.
+ * @return Converts passed date to display YYYYMM.
+ */
+Utils.dateToYYYYMM = function(dt) {
+	return dt.getFullYear().toString() + ((dt.getMonth() + 1).toString().length === 1 ? "0" + (dt.getMonth() + 1).toString() : (dt.getMonth() + 1).toString());
+}
+
+/**
+ * @method toShortDate Takes a date and returns it as MM/DD/YYYY.
+ * @param dt {date} Pass a date object.
+ * @return Converts date to short date MM/DD/YYYY.
+ */
+Utils.toShortDate = function(dt) {
+	return (dt.getMonth() + 1).toString() + '/' + dt.getDate().toString() + '/' + dt.getFullYear().toString();
+}
+//+++ Does this return a string of a date object?
+/**
+ * @method dateToDD
+ * @param dt {date} Pass a date object.
+ * @return {date} 
+ */
+Utils.dateToDD = function(dt) {
+	return dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString();
+}
+//+++Property semi-colon?
+/**
+ * @property monthNames
+ */
+Utils.monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/**
+ * @method stripTime Removes Hours, Minutes and Seconds from the Date object.
+ * @param dt {date} Pass a date object.
+ * @return {date} Returns Date object with only Years, Months and Days.
+ */
+Utils.stripTime = function(dt) {
+	return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate()); 
+}
+
+/**
+ * @method getDaysInMonth Number of days in the month.
+ * @param dt {date} Pass a date object.
+ * @return {date} Returns a new date containing the number of days in a month.
+ */
+Utils.getDaysInMonth = function(dt) {
+	var nextYear = dt.getMonth() === 11 ? dt.getFullYear()+1 : dt.getFullYear()
+	  , nextMonth = dt.getMonth() === 11 ? 1 : dt.getMonth() + 1
+	  , firstOfNextMonth = new Date(nextYear, nextMonth, 1);
+	
+	return new Date(firstOfNextMonth.getTime() - 86400000).getDate();
+}
+//+++ Is this the correct way of defining this method?
+/**
+ * @method makeDays Dynamically creates days.
+ * @param dt {date} Pass a date object.
+ * @return {object}
+ */
+Utils.makeDays = function(dt) {
+	var days = []
+	  , currDaysInMonth = getDaysInMonth(dt || new Date());
+	for (var i = 1; i < currDaysInMonth+1; i++) { days.push(makeOption(pad(i,2)));};    
+		return days;
+}
+
+/**
+ * @method makeMonths Dynamically creates months.
+ * @return {object} Returns an array of 12 month names and date numbers.
+ */
+Utils.makeMonths = function () {
+	var months = [];
+	for (var i = 1; i < 13; i++) { months.push(makeOption(pad(i,2),monthNames[i-1])); };
+		return months;
+}
+//+++ Is this method defined correctly?
+/**
+ * @method makeYears Create years based on what number you pass.
+ * @param yearCount {number} 
+ * @return {object} Returns an object containing the number of years you passed to the function
+ */
+Utils.makeYears = function(yearCount) {
+	var currYear = new Date().getFullYear()
+	  , years = []
+	  , cnt = yearCount || 2;
+	
+	for (var i = 0; i < (yearCount+1); i++) {years.push(makeOption(currYear+i)); };
+	return years;
+}
+//+++ Is this method defined correctly?
+/**
+ * @method makeYearMonths Dynamically creates months and years.
+ * @param periodCount
+ * @return {object} Returns an object containing the dynamically created  month and years.
+ */
+Utils.makeYearMonths = function(periodCount) {
+	var currMonth = new Date().getMonth()+1        
+	  , currYear = new Date().getFullYear()
+	  , monthYears = []
+	  , periods = periodCount || 24;
+	
+	for (var i = 1; i < (periods+1); i++) { 
+		var key = String(currYear) + pad(currMonth,2);
+		var val = monthNames[currMonth-1] + ' ' + String(currYear);
+		monthYears.push(makeOption(key, val));         
+		currMonth += 1
+		if (currMonth === 13) {
+			currMonth = 1;
+			currYear += 1;
+		};
+	};
+   
+	return monthYears;
+}
+
+/**
+ * @method addDays Adds a day(s) to the date passed by the dt parameter.
+ * @param dt {date} Pass a date object.
+ * @param days {number} 
+ * @return {date} Returns a new date with the added day(s).
+ */
+Utils.addDays = function(dt, days) {
+	return new Date((dt.getTime() + (86400000 * days || 1))); 
+}
+
+/**
+ * @method toDays Calculates the remaining time between the two dates.
+ * @param begDate {date} Pass a date object.
+ * @param endDate {date} Pass a date object.
+ * @return {number} Returns remaining time between begDate and endDate parameters.
+ */
+Utils.toDays = function(begDate, endDate) {
+	return ( (endDate-begDate > 0 ? endDate-begDate : begDate-endDate)/(1000*60*60*24) ); 
+}
+
+/**
+ * @method getLocalTime Finds the local time by offsetting the necessary amount of hours from UTC.
+ * @param offset {number} This number can be negative to fit accordingly with the desired timezone. Ex. To get Pacific Statndard Time (PST) pass -8 to the offset.
+ * @param dt {date}
+ * @return {date} Returns the Local date as specified by the offset parameter.
+ */
+Utils.getLocalTime = function (offset, dt) {
+	var d = dt || Utils.utcTime();
+	return new Date((d.getTime() + (3600000 * offset)));
+}
+
+/**
+ * @method utcTime Takes a standard date object an coverts it to UTC time.
+ * @return Returns UTC date in the following order: Year, Month, Day, Hours, Minutes and Seconds.
+ */
+Utils.utcTime = function() {
+	var now = new Date();
+	return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());    
+}
