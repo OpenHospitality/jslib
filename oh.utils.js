@@ -95,7 +95,7 @@ Utils.padZero = function (number, length) {
 	while (str.length < length) { str = '0' + str; }
 	return str;
 }
-//+++ What does this method return?
+
 /**
  * @method removeSelectOptions
  * @param select {object}
@@ -106,7 +106,7 @@ Utils.removeSelectOptions = function(select) {
 		select.removeChild(select.lastChild);
 	}
 }
-//+++ What param type does value accept?
+
 /**
  * @method setSelected
  * @param id {object}
@@ -119,7 +119,7 @@ Utils.setSelected = function (id, value) {
 		options[i].selected = options[i].value === value;
 	}
 }
-//+++
+
 /**
  * @method stopEvent
  * @param e {object}
@@ -144,8 +144,6 @@ Utils.areDatesEqual = function(dt1, dt2) {
 		return (d1 === d2 ? true : false);
 };
 
-
-
 /**
  * @method dateToYYYYMMDD
  * @param dt {date} Pass a date object.
@@ -155,7 +153,6 @@ Utils.dateToYYYYMMDD = function(dt) {
 		return dt.getFullYear().toString() + ((dt.getMonth() + 1).toString().length === 1 ? "0" + (dt.getMonth() + 1).toString() : (dt.getMonth() + 1).toString()) + (dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString());
 }
 
-//+++ Does this return a string of a date object?
 /**
  * @method dateToYYYYMM
  * @param dt {date} Pass a date object.
@@ -173,7 +170,7 @@ Utils.dateToYYYYMM = function(dt) {
 Utils.toShortDate = function(dt) {
 	return (dt.getMonth() + 1).toString() + '/' + dt.getDate().toString() + '/' + dt.getFullYear().toString();
 }
-//+++ Does this return a string of a date object?
+
 /**
  * @method dateToDD
  * @param dt {date} Pass a date object.
@@ -182,7 +179,7 @@ Utils.toShortDate = function(dt) {
 Utils.dateToDD = function(dt) {
 	return dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString();
 }
-//+++Property semi-colon?
+
 /**
  * @property monthNames
  */
@@ -209,7 +206,7 @@ Utils.getDaysInMonth = function(dt) {
 	
 	return new Date(firstOfNextMonth.getTime() - 86400000).getDate();
 }
-//+++ Is this the correct way of defining this method?
+
 /**
  * @method makeDays Dynamically creates days.
  * @param dt {date} Pass a date object.
@@ -231,7 +228,7 @@ Utils.makeMonths = function () {
 	for (var i = 1; i < 13; i++) { months.push(makeOption(pad(i,2),monthNames[i-1])); };
 		return months;
 }
-//+++ Is this method defined correctly?
+
 /**
  * @method makeYears Create years based on what number you pass.
  * @param yearCount {number} 
@@ -245,7 +242,7 @@ Utils.makeYears = function(yearCount) {
 	for (var i = 0; i < (yearCount+1); i++) {years.push(makeOption(currYear+i)); };
 	return years;
 }
-//+++ Is this method defined correctly?
+
 /**
  * @method makeYearMonths Dynamically creates months and years.
  * @param periodCount
