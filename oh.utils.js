@@ -5,6 +5,8 @@
  * @author sgravitz@openhospitality.com (Steve Gravitz), daniel@openhospitality.com (Daniel Mickleburgh)
  * @module Utils
  * @change SG 2012-02-10 Added "trim" method
+ * @change DM 2012-03-28 Fixed bug in "areDatesEqual" method
+ * @change DM 2012-04-02 Cleaned up code
  */
 
 
@@ -15,7 +17,7 @@
 var Utils = Utils || {};
 
 /**
- * @method dir enumerates properties of current obj.
+ * @method dir enumerates through properties of the current object.
  * @param obj {Object} the object to enumerate
  * @return {string} returns the trimmed string
  */
@@ -31,8 +33,8 @@ Utils.dir = function(obj) {
 
 /**
  * @method trim removes any leading and trailing spaces from string.
- * @param str {string} the string to trim
- * @return {string} returns the trimmed string
+ * @param str {string} The string to trim
+ * @return {string} Returns the trimmed string
  */
 Utils.trim = function(str) {
     var str = str.replace(/^\s\s*/, '')
@@ -45,18 +47,18 @@ Utils.trim = function(str) {
 
 /**
  * @method encodeParameter Replaces any space characters with the plus sign.
- * @param value {string} the value to encode
- * @return {string} returns the string from calling replace on value
+ * @param value {string} The value to encode
+ * @return {string} Returns the string from calling replace on value
  */
 Utils.encodeParameter = function(value) {
-		return value.replace(' ','+');
+	return value.replace(' ','+');
 };
 
 /**
  * @method makeOption Creates an opening and closing option tag.
- * @param value {string} the option value.
- * @param description {string} the option description - defaults to value if missing.
- * @return {string} returns a string version of an html option element.
+ * @param value {string} The option value.
+ * @param description {string} The option description - defaults to value if missing.
+ * @return {string} Returns a string version of an html option element.
  */
 Utils.makeOption = function(value, description) { 
 	return "<option value=\"" + value + "\">" + (description || value) + "</option>"; 
@@ -74,9 +76,9 @@ Utils.getPageFromUrl = function(){
 /**
  * @method pad Inserts an integer before a value
  * @param padChar {string} The integer you wish to place before the value passed.
- * @param value {string} 
+ * @param value {string}
  * @param length {string} Length of padding and value
- * @return  
+ * @return {string} 
  */
 Utils.pad =  function (padChar, value, length) {
 	var str = '' + value;
@@ -97,9 +99,8 @@ Utils.padZero = function (number, length) {
 }
 
 /**
- * @method removeSelectOptions
+ * @method removeSelectOptions Removes a select option if the length of child nodes is less than 1
  * @param select {object}
- * @return
  */
 Utils.removeSelectOptions = function(select) {
 	while (select.childNodes.length > 1) {
@@ -108,10 +109,10 @@ Utils.removeSelectOptions = function(select) {
 }
 
 /**
- * @method setSelected
+ * @method setSelected Iterates through an options list to find the selected element
  * @param id {object}
- * @param value
- * @return  
+ * @param value {string}
+ * @return {string} Returns selected element
  */
 Utils.setSelected = function (id, value) {
 	var options = document.getElementById(id).getElementsByTagName("option");
@@ -121,9 +122,8 @@ Utils.setSelected = function (id, value) {
 }
 
 /**
- * @method stopEvent
- * @param e {object}
- * @return
+ * @method stopEvent Stops the event from propagating and prevents the browser default event action
+ * @param e {object} Pass an event object
  */
 Utils.stopEvent = function(e) {
 	if (e.stopPropagation) e.stopPropagation();
@@ -133,15 +133,14 @@ Utils.stopEvent = function(e) {
 	else e.returnValue = false;
 }
 
-
 /**
- * @method areDatesEqual
- * @param dt1 {date} Pass the first date object to compare.
- * @param dt2 {date} Pass the second date object to compare. 
- * @return {Boolean} True if Y,M,D are the same for both, otherwise false.
+ * @method areDatesEqual Check eqaulity of two date objects 
+ * @param dt1 {date} First date object.
+ * @param dt2 {date} Second date onject. 
+ * @return {Boolean} True if dates are equal, otherwise false.
  */
 Utils.areDatesEqual = function(dt1, dt2) {
-		return (d1 === d2 ? true : false);
+	return (dt1 === dt2) ? true : false;
 };
 
 /**
@@ -150,7 +149,7 @@ Utils.areDatesEqual = function(dt1, dt2) {
  * @return Converts passed date to display YYYYMMDD.
  */
 Utils.dateToYYYYMMDD = function(dt) {
-		return dt.getFullYear().toString() + ((dt.getMonth() + 1).toString().length === 1 ? "0" + (dt.getMonth() + 1).toString() : (dt.getMonth() + 1).toString()) + (dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString());
+	return dt.getFullYear().toString() + ((dt.getMonth() + 1).toString().length === 1 ? "0" + (dt.getMonth() + 1).toString() : (dt.getMonth() + 1).toString()) + (dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString());
 }
 
 /**
@@ -163,9 +162,9 @@ Utils.dateToYYYYMM = function(dt) {
 }
 
 /**
- * @method toShortDate Takes a date and returns it as MM/DD/YYYY.
+ * @method toShortDate
  * @param dt {date} Pass a date object.
- * @return Converts date to short date MM/DD/YYYY.
+ * @return {string} Converts date t0 MM/DD/YYYY.
  */
 Utils.toShortDate = function(dt) {
 	return (dt.getMonth() + 1).toString() + '/' + dt.getDate().toString() + '/' + dt.getFullYear().toString();
@@ -174,16 +173,11 @@ Utils.toShortDate = function(dt) {
 /**
  * @method dateToDD
  * @param dt {date} Pass a date object.
- * @return {date} 
+ * @return {string} Returns day in 2 digit format.
  */
 Utils.dateToDD = function(dt) {
 	return dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString();
 }
-
-/**
- * @property monthNames
- */
-Utils.monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 /**
  * @method stripTime Removes Hours, Minutes and Seconds from the Date object.
@@ -210,7 +204,7 @@ Utils.getDaysInMonth = function(dt) {
 /**
  * @method makeDays Dynamically creates days.
  * @param dt {date} Pass a date object.
- * @return {object}
+ * @return {object} Returns day elements
  */
 Utils.makeDays = function(dt) {
 	var days = []
