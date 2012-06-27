@@ -7,6 +7,7 @@
  * @change SG 2012-02-10 Added "trim" method
  * @change DM 2012-03-28 Fixed bug in "areDatesEqual" method
  * @change DM 2012-04-02 Cleaned up code
+ * @change DM 2012-06-21 Add new methods: 
  */
 
 
@@ -300,4 +301,50 @@ Utils.getLocalTime = function (offset, dt) {
 Utils.utcTime = function() {
 	var now = new Date();
 	return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());    
+}
+
+/*
+ * @method cloneDate clones a date
+ * @param dt {date}
+ * @return {date}Clones the passed date object and returns it
+ */
+Utils.cloneDate = function (dt) {
+	var date = new Date(dt.getTime());
+	return date;
+}
+
+/**
+ * @method subtractDays - subtracts a day(s) to the date passed by the dt parameter.
+ * @param dt {date} Pass a date object.
+ * @param days {number} 
+ * @return {date} Returns a new date with the subtracted day(s).
+ */
+Utils.subtractDays = function(dt, days) {
+    return new Date((dt.getTime() - (86400000 * days || 1))); 
+};
+
+/**
+ * @method bindThis - binds function to a specific conetext
+ * @param scope - object context 
+ * @return {function} scoped to given context
+ */
+Function.prototype.bindThis = function(scope) {
+	var _function = this;
+
+	return function() {
+		return _function.apply(scope, arguments);
+	}
+};
+
+/**
+ * @method YYYYMMDDtoDate
+ * @param str {string} Pass a string date in YYYYMMDD format.
+ * @return Converts passed YYYYMMDD string to date.
+ */
+Utils.YYYYMMDDtoDate = function(str) {
+    return new Date(
+        Number(str.substring(0, 4)), 
+        Number(str.substring(4, 6)) - 1, 
+        Number(str.substring(6, 8))
+    );
 }
