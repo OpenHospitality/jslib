@@ -7,7 +7,7 @@
  * @change SG 2012-02-10 Added "trim" method
  * @change DM 2012-03-28 Fixed bug in "areDatesEqual" method
  * @change DM 2012-04-02 Cleaned up code
- * @change DM 2012-06-21 Add new methods: 
+ * @change DM 2012-06-27 Add new methods: cloneDate, subtractDays, bindThis, YYYYMMDDtoDate
  */
 
 
@@ -180,7 +180,7 @@ Utils.dateToDD = function(dt) {
 	return dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString();
 }
 
-Utils.monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+Utils.monthNamesArray = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 /**
  * @method stripTime Removes Hours, Minutes and Seconds from the Date object.
@@ -222,7 +222,7 @@ Utils.makeDays = function(dt) {
  */
 Utils.makeMonths = function () {
 	var months = [];
-	for (var i = 1; i < 13; i++) { months.push(makeOption(pad(i,2),monthNames[i-1])); };
+	for (var i = 1; i < 13; i++) { months.push(makeOption(pad(i,2),monthNamesArray[i-1])); };
 		return months;
 }
 
@@ -253,7 +253,7 @@ Utils.makeYearMonths = function(periodCount) {
 	
 	for (var i = 1; i < (periods+1); i++) { 
 		var key = String(currYear) + pad(currMonth,2);
-		var val = monthNames[currMonth-1] + ' ' + String(currYear);
+		var val = monthNamesArray[currMonth-1] + ' ' + String(currYear);
 		monthYears.push(makeOption(key, val));         
 		currMonth += 1
 		if (currMonth === 13) {
