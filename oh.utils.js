@@ -180,6 +180,8 @@ Utils.dateToDD = function(dt) {
 	return dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString();
 }
 
+Utils.monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
 /**
  * @method stripTime Removes Hours, Minutes and Seconds from the Date object.
  * @param dt {date} Pass a date object.
