@@ -2,7 +2,7 @@
 
 /**
  * @fileoverview A script containing utility functions used throughout all sites
- * @author sgravitz@openhospitality.com (Steve Gravitz), daniel@openhospitality.com (Daniel Mickleburgh)
+ * @author sgravitz@openhospitality.com (Steve Gravitz), daniel.mickleburgh@openhospitality.com (Daniel Mickleburgh)
  * @module Utils
  * @change SG 2012-02-10 Added "trim" method
  * @change DM 2012-03-28 Fixed bug in "areDatesEqual" method
@@ -10,13 +10,12 @@
  * @change DM 2012-06-27 Add new methods: cloneDate, subtractDays, bindThis, YYYYMMDDtoDate
  */
 
-
 /**
  * Namespace
  * @type {Object}
  */
 var Utils = Utils || {};
-
+Utils.version = Utils.v = 0.1;
 /**
  * @method dir enumerates through properties of the current object.
  * @param obj {Object} the object to enumerate
@@ -47,16 +46,16 @@ Utils.trim = function(str) {
 };
 
 /**
- * @method encodeParameter Replaces any space characters with the plus sign.
+ * @method encodeParameter Replaces any space characters within a string with a plus sign.
  * @param value {string} The value to encode
  * @return {string} Returns the string from calling replace on value
  */
 Utils.encodeParameter = function(value) {
-	return value.replace(' ','+');
+	return value.replace(/(\s)/g,'+');
 };
 
 /**
- * @method makeOption Creates an opening and closing option tag.
+ * @method Dynamically creates an option tag with a specified value.
  * @param value {string} The option value.
  * @param description {string} The option description - defaults to value if missing.
  * @return {string} Returns a string version of an html option element.
@@ -75,10 +74,10 @@ Utils.getPageFromUrl = function(){
 }
 
 /**
- * @method pad Inserts an integer before a value
- * @param padChar {string} The integer you wish to place before the value passed.
+ * @method 
+ * @param padChar {string}
  * @param value {string}
- * @param length {string} Length of padding and value
+ * @param length {number}
  * @return {string} 
  */
 Utils.pad =  function (padChar, value, length) {
@@ -135,7 +134,7 @@ Utils.stopEvent = function(e) {
 }
 
 /**
- * @method areDatesEqual Check eqaulity of two date objects 
+ * @method areDatesEqual Check if two dates are equal 
  * @param dt1 {date} First date object.
  * @param dt2 {date} Second date onject. 
  * @return {Boolean} True if dates are equal, otherwise false.
@@ -189,7 +188,7 @@ Utils.monthNamesArray = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','
  */
 Utils.stripTime = function(dt) {
 	return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate()); 
-}
+};
 
 /**
  * @method getDaysInMonth Number of days in the month.
@@ -202,7 +201,7 @@ Utils.getDaysInMonth = function(dt) {
 	  , firstOfNextMonth = new Date(nextYear, nextMonth, 1);
 	
 	return new Date(firstOfNextMonth.getTime() - 86400000).getDate();
-}
+};
 
 /**
  * @method makeDays Dynamically creates days.
@@ -214,7 +213,7 @@ Utils.makeDays = function(dt) {
 	  , currDaysInMonth = getDaysInMonth(dt || new Date());
 	for (var i = 1; i < currDaysInMonth+1; i++) { days.push(makeOption(pad(i,2)));};    
 		return days;
-}
+};
 
 /**
  * @method makeMonths Dynamically creates months.
@@ -224,7 +223,7 @@ Utils.makeMonths = function () {
 	var months = [];
 	for (var i = 1; i < 13; i++) { months.push(makeOption(pad(i,2),monthNamesArray[i-1])); };
 		return months;
-}
+};
 
 /**
  * @method makeYears Create years based on what number you pass.
@@ -238,7 +237,7 @@ Utils.makeYears = function(yearCount) {
 	
 	for (var i = 0; i < (yearCount+1); i++) {years.push(makeOption(currYear+i)); };
 	return years;
-}
+};
 
 /**
  * @method makeYearMonths Dynamically creates months and years.
@@ -263,7 +262,7 @@ Utils.makeYearMonths = function(periodCount) {
 	};
    
 	return monthYears;
-}
+};
 
 /**
  * @method addDays Adds a day(s) to the date passed by the dt parameter.
@@ -272,18 +271,22 @@ Utils.makeYearMonths = function(periodCount) {
  * @return {date} Returns a new date with the added day(s).
  */
 Utils.addDays = function(dt, days) {
-	return new Date((dt.getTime() + (86400000 * days || 1))); 
-}
+    var newDate = new Date(dt);
+    for (var i=0;i < days;i++) {
+        newDate = new Date((newDate.getTime() + 86400000));     
+    }
+    return newDate; 
+};
 
 /**
  * @method toDays Calculates the remaining time between the two dates.
- * @param begDate {date} Pass a date object.
- * @param endDate {date} Pass a date object.
+ * @param begDate {date} 
+ * @param endDate {date} 
  * @return {number} Returns remaining time between begDate and endDate parameters.
  */
 Utils.toDays = function(begDate, endDate) {
-	return ( (endDate-begDate > 0 ? endDate-begDate : begDate-endDate)/(1000*60*60*24) ); 
-}
+	return ( (endDate - begDate > 0 ? endDate - begDate : begDate - endDate)/(1000*60*60*24) ); 
+};
 
 /**
  * @method getLocalTime Finds the local time by offsetting the necessary amount of hours from UTC.
@@ -294,7 +297,7 @@ Utils.toDays = function(begDate, endDate) {
 Utils.getLocalTime = function (offset, dt) {
 	var d = dt || Utils.utcTime();
 	return new Date((d.getTime() + (3600000 * offset)));
-}
+};
 
 /**
  * @method utcTime Takes a standard date object an coverts it to UTC time.
@@ -303,7 +306,7 @@ Utils.getLocalTime = function (offset, dt) {
 Utils.utcTime = function() {
 	var now = new Date();
 	return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());    
-}
+};
 
 /*
  * @method cloneDate clones a date
@@ -313,7 +316,7 @@ Utils.utcTime = function() {
 Utils.cloneDate = function (dt) {
 	var date = new Date(dt.getTime());
 	return date;
-}
+};
 
 /**
  * @method subtractDays - subtracts a day(s) to the date passed by the dt parameter.
@@ -326,7 +329,7 @@ Utils.subtractDays = function(dt, days) {
 };
 
 /**
- * @method bindThis - binds function to a specific conetext
+ * @method bindThis - binds function to a specific conetext - similar to Native ES5 method bind
  * @param scope - object context 
  * @return {function} scoped to given context
  */
@@ -349,4 +352,43 @@ Utils.YYYYMMDDtoDate = function(str) {
         Number(str.substring(4, 6)) - 1, 
         Number(str.substring(6, 8))
     );
-}
+};
+
+/**
+ * Mixes an object's prototype method(s) into another object's prototype
+ * @method augment
+ */
+Utils.augment = function (destination, source) {
+    if (arguments[2]) {
+        for (var i = 2; i < arguments.length; i++) {
+            destination.prototype[arguments[i]] = source.prototype[arguments[i]];
+        }
+    } else {
+        for (methodName in source.prototype) {
+            if (!destination.prototype[methodName]) {
+                destination.prototype[methodName] = source.prototype[methodName];
+            }
+        }
+    }
+};
+
+/**
+* @method queryStringDictionary
+* @param passedUrl {string} Pass a Url to parse paraemeters
+* @return object containing key for each queryParm
+*/
+Utils.queryStringDictionary = function (passedUrl) {
+
+	var queryString = {},
+		url = passedUrl || window.location.search || '';
+
+	if (url.length > 1) {
+		var parameters = url.substr(1).split("&");
+		for (i = 0; i < parameters.length; i++) {
+			var entry = parameters[i].split("=");
+			queryString[decodeURI(entry[0])] = entry.length > 1 ? decodeURI(entry[1]) : "";
+		}
+	}
+	queryString.asString = function () { return JSON.stringify(queryString, null, '\t') };
+	return queryString;
+};
