@@ -15,7 +15,7 @@
  * @type {Object}
  */
 var Utils = Utils || {};
-Utils.version = Utils.v = 0.1;
+Utils.version = Utils.v = 0.2;
 /**
  * @method dir enumerates through properties of the current object.
  * @param obj {Object} the object to enumerate
@@ -391,4 +391,13 @@ Utils.queryStringDictionary = function (passedUrl) {
 	}
 	queryString.asString = function () { return JSON.stringify(queryString, null, '\t') };
 	return queryString;
+};
+
+/**
+* @method toBoolean
+* @param value {string} Pass a value to be evaluated as Boolean
+* @return boolean 
+*/
+Utils.toBoolean = function (value) {
+    return String(value[0]) === 't' || String(value[0]) === '1' || String(value[0]) === 'y';
 };
