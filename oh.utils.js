@@ -4,10 +4,6 @@
  * @fileoverview A script containing utility functions used throughout all sites
  * @author sgravitz@openhospitality.com (Steve Gravitz), daniel.mickleburgh@openhospitality.com (Daniel Mickleburgh)
  * @module Utils
- * @change SG 2012-02-10 Added "trim" method
- * @change DM 2012-03-28 Fixed bug in "areDatesEqual" method
- * @change DM 2012-04-02 Cleaned up code
- * @change DM 2012-06-27 Add new methods: cloneDate, subtractDays, bindThis, YYYYMMDDtoDate
  */
 
 /**
@@ -399,5 +395,5 @@ Utils.queryStringDictionary = function (passedUrl) {
 * @return boolean 
 */
 Utils.toBoolean = function (value) {
-    return String(value[0]) === 't' || String(value[0]) === '1' || String(value[0]) === 'y';
+    return String(value)[0] === 't' || String(value)[0] === '1' || String(value)[0] === 'y';
 };
