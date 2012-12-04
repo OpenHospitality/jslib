@@ -11,19 +11,19 @@
  * @type {Object}
  */
 var Utils = Utils || {};
-Utils.version = Utils.v = 0.2;
+Utils.version = Utils.v = 0.3;
 /**
  * @method dir enumerates through properties of the current object.
  * @param obj {Object} the object to enumerate
  * @return {string} returns the trimmed string
  */
 Utils.dir = function(obj) {
-    obj = obj || this;	
+	obj = obj || this;
 	for(var propertyName in obj) {
-	    if (obj.hasOwnProperty(propertyName)) {
-	        console.log(propertyName, typeof obj[propertyName]);
-	        console.log(obj[propertyName]);
-	  	}    
+		if (obj.hasOwnProperty(propertyName)) {
+			console.log(propertyName, typeof obj[propertyName]);
+			console.log(obj[propertyName]);
+		}
 	}
 };
 
@@ -33,12 +33,11 @@ Utils.dir = function(obj) {
  * @return {string} Returns the trimmed string
  */
 Utils.trim = function(str) {
-    var str = str.replace(/^\s\s*/, '')
-      , ws = /\s/
-      , i = str.length;
-
-    while (ws.test(str.charAt(--i)));
-    return str.slice(0, i + 1);
+	var str = str.replace(/^\s\s*/, '')
+	  , ws = /\s/
+	  , i = str.length;
+	while (ws.test(str.charAt(--i)));
+	return str.slice(0, i + 1);
 };
 
 /**
@@ -65,9 +64,9 @@ Utils.makeOption = function(value, description) {
  * @return {object} Returns an array of the pathname split up by /
  */
 Utils.getPageFromUrl = function(){
-	var parts = location.pathname.split('/')    
-	return parts[parts.length-1];                           
-}
+	var parts = location.pathname.split('/');
+	return parts[parts.length-1];
+};
 
 /**
  * @method 
@@ -80,7 +79,7 @@ Utils.pad =  function (padChar, value, length) {
 	var str = '' + value;
 	while (str.length < length) { str = padChar + str; }
 	return str;
-}
+};
 
 /**
  * @method padZero Inserts a 0 before the passed number.
@@ -92,7 +91,7 @@ Utils.padZero = function (number, length) {
 	var str = '' + number;
 	while (str.length < length) { str = '0' + str; }
 	return str;
-}
+};
 
 /**
  * @method removeSelectOptions Removes a select option if the length of child nodes is less than 1
@@ -102,7 +101,7 @@ Utils.removeSelectOptions = function(select) {
 	while (select.childNodes.length > 1) {
 		select.removeChild(select.lastChild);
 	}
-}
+};
 
 /**
  * @method setSelected Iterates through an options list to find the selected element
@@ -115,7 +114,7 @@ Utils.setSelected = function (id, value) {
 	for (var i = 0; i < options.length; i++) {
 		options[i].selected = options[i].value === value;
 	}
-}
+};
 
 /**
  * @method stopEvent Stops the event from propagating and prevents the browser default event action
@@ -127,7 +126,7 @@ Utils.stopEvent = function(e) {
 
 	if (e.preventDefault) e.preventDefault();
 	else e.returnValue = false;
-}
+};
 
 /**
  * @method areDatesEqual Check if two dates are equal 
@@ -146,7 +145,7 @@ Utils.areDatesEqual = function(dt1, dt2) {
  */
 Utils.dateToYYYYMMDD = function(dt) {
 	return dt.getFullYear().toString() + ((dt.getMonth() + 1).toString().length === 1 ? "0" + (dt.getMonth() + 1).toString() : (dt.getMonth() + 1).toString()) + (dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString());
-}
+};
 
 /**
  * @method dateToYYYYMM
@@ -155,7 +154,7 @@ Utils.dateToYYYYMMDD = function(dt) {
  */
 Utils.dateToYYYYMM = function(dt) {
 	return dt.getFullYear().toString() + ((dt.getMonth() + 1).toString().length === 1 ? "0" + (dt.getMonth() + 1).toString() : (dt.getMonth() + 1).toString());
-}
+};
 
 /**
  * @method toShortDate
@@ -164,7 +163,7 @@ Utils.dateToYYYYMM = function(dt) {
  */
 Utils.toShortDate = function(dt) {
 	return (dt.getMonth() + 1).toString() + '/' + dt.getDate().toString() + '/' + dt.getFullYear().toString();
-}
+};
 
 /**
  * @method dateToDD
@@ -173,7 +172,7 @@ Utils.toShortDate = function(dt) {
  */
 Utils.dateToDD = function(dt) {
 	return dt.getDate().toString().length === 1 ? "0" + dt.getDate().toString() : dt.getDate().toString();
-}
+};
 
 Utils.monthNamesArray = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -217,7 +216,7 @@ Utils.makeDays = function(dt) {
  */
 Utils.makeMonths = function () {
 	var months = [];
-	for (var i = 1; i < 13; i++) { months.push(makeOption(pad(i,2),monthNamesArray[i-1])); };
+	for (var i = 1; i < 13; i++) { months.push(makeOption(pad(i,2),monthNamesArray[i-1])); }
 		return months;
 };
 
@@ -231,7 +230,7 @@ Utils.makeYears = function(yearCount) {
 	  , years = []
 	  , cnt = yearCount || 2;
 	
-	for (var i = 0; i < (yearCount+1); i++) {years.push(makeOption(currYear+i)); };
+	for (var i = 0; i < (yearCount+1); i++) {years.push(makeOption(currYear+i)); }
 	return years;
 };
 
@@ -241,22 +240,22 @@ Utils.makeYears = function(yearCount) {
  * @return {object} Returns an object containing the dynamically created  month and years.
  */
 Utils.makeYearMonths = function(periodCount) {
-	var currMonth = new Date().getMonth()+1        
+	var currMonth = new Date().getMonth()+1
 	  , currYear = new Date().getFullYear()
 	  , monthYears = []
 	  , periods = periodCount || 24;
 	
-	for (var i = 1; i < (periods+1); i++) { 
+	for (var i = 1; i < (periods+1); i++) {
 		var key = String(currYear) + pad(currMonth,2);
 		var val = monthNamesArray[currMonth-1] + ' ' + String(currYear);
-		monthYears.push(makeOption(key, val));         
-		currMonth += 1
+		monthYears.push(makeOption(key, val));
+		currMonth += 1;
 		if (currMonth === 13) {
 			currMonth = 1;
 			currYear += 1;
-		};
-	};
-   
+		}
+	}
+
 	return monthYears;
 };
 
@@ -267,11 +266,11 @@ Utils.makeYearMonths = function(periodCount) {
  * @return {date} Returns a new date with the added day(s).
  */
 Utils.addDays = function(dt, days) {
-    var newDate = new Date(dt);
-    for (var i=0;i < days;i++) {
-        newDate = new Date((newDate.getTime() + 86400000));     
-    }
-    return newDate; 
+	var newDate = new Date(dt);
+	for (var i=0;i < days;i++) {
+		newDate = new Date((newDate.getTime() + 86400000));
+	}
+	return newDate;
 };
 
 /**
@@ -281,7 +280,7 @@ Utils.addDays = function(dt, days) {
  * @return {number} Returns remaining time between begDate and endDate parameters.
  */
 Utils.toDays = function(begDate, endDate) {
-	return ( (endDate - begDate > 0 ? endDate - begDate : begDate - endDate)/(1000*60*60*24) ); 
+	return ( (endDate - begDate > 0 ? endDate - begDate : begDate - endDate)/(1000*60*60*24) );
 };
 
 /**
@@ -301,7 +300,7 @@ Utils.getLocalTime = function (offset, dt) {
  */
 Utils.utcTime = function() {
 	var now = new Date();
-	return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());    
+	return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 };
 
 /*
@@ -317,11 +316,11 @@ Utils.cloneDate = function (dt) {
 /**
  * @method subtractDays - subtracts a day(s) to the date passed by the dt parameter.
  * @param dt {date} Pass a date object.
- * @param days {number} 
+ * @param days {number}
  * @return {date} Returns a new date with the subtracted day(s).
  */
 Utils.subtractDays = function(dt, days) {
-    return new Date((dt.getTime() - (86400000 * days || 1))); 
+	return new Date((dt.getTime() - (86400000 * days || 1)));
 };
 
 /**
@@ -334,7 +333,7 @@ Function.prototype.bindThis = function(scope) {
 
 	return function() {
 		return _function.apply(scope, arguments);
-	}
+	};
 };
 
 /**
@@ -343,11 +342,11 @@ Function.prototype.bindThis = function(scope) {
  * @return Converts passed YYYYMMDD string to date.
  */
 Utils.YYYYMMDDtoDate = function(str) {
-    return new Date(
-        Number(str.substring(0, 4)), 
-        Number(str.substring(4, 6)) - 1, 
-        Number(str.substring(6, 8))
-    );
+	return new Date(
+		Number(str.substring(0, 4)),
+		Number(str.substring(4, 6)) - 1,
+		Number(str.substring(6, 8))
+	);
 };
 
 /**
@@ -355,17 +354,17 @@ Utils.YYYYMMDDtoDate = function(str) {
  * @method augment
  */
 Utils.augment = function (destination, source) {
-    if (arguments[2]) {
-        for (var i = 2; i < arguments.length; i++) {
-            destination.prototype[arguments[i]] = source.prototype[arguments[i]];
-        }
-    } else {
-        for (methodName in source.prototype) {
-            if (!destination.prototype[methodName]) {
-                destination.prototype[methodName] = source.prototype[methodName];
-            }
-        }
-    }
+	if (arguments[2]) {
+		for (var i = 2; i < arguments.length; i++) {
+			destination.prototype[arguments[i]] = source.prototype[arguments[i]];
+		}
+	} else {
+		for (methodName in source.prototype) {
+			if (!destination.prototype[methodName]) {
+				destination.prototype[methodName] = source.prototype[methodName];
+			}
+		}
+	}
 };
 
 /**
@@ -385,7 +384,7 @@ Utils.queryStringDictionary = function (passedUrl) {
 			queryString[decodeURI(entry[0])] = entry.length > 1 ? decodeURI(entry[1]) : "";
 		}
 	}
-	queryString.asString = function () { return JSON.stringify(queryString, null, '\t') };
+	queryString.asString = function () { return JSON.stringify(queryString, null, '\t');};
 	return queryString;
 };
 
@@ -395,5 +394,39 @@ Utils.queryStringDictionary = function (passedUrl) {
 * @return boolean 
 */
 Utils.toBoolean = function (value) {
-    return String(value)[0] === 't' || String(value)[0] === '1' || String(value)[0] === 'y';
+	return String(value)[0] === 't' || String(value)[0] === '1' || String(value)[0] === 'y';
+};
+
+/**
+* @method getNestedValue
+* @param obj {object} The object to be evaluated
+* @param prop {string} The property name in . notation
+* @return object 
+*/
+Utils.getNestedValue = function(obj, prop) {
+	var props = prop.split('.');
+	for (var i = 0; i < props.length; i++) {
+		if (typeof obj != "undefined") { obj = obj[props[i]]; }
+	}
+	return obj;
+};
+
+
+/**
+* @method setNestedValue
+* @param obj {object} The object to be evaluated
+* @param prop {string} The property name in . notation
+* @param val {object} The value to set
+* @return object 
+*/
+Utils.setNestedValue = function(obj, prop, val) {
+	var name, props = prop.split('.');
+
+	if (props.length === 1) {
+		obj[prop] = val;
+	} else {
+		name = props.pop();
+		var parentObj = Utils.getNestedValue(obj, props.join('.'));
+		parentObj[name] = val;
+	}
 };
