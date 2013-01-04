@@ -11,7 +11,7 @@
  * @type {Object}
  */
 var Utils = Utils || {};
-Utils.version = Utils.v = 0.3;
+Utils.version = Utils.v = 0.4;
 /**
  * @method dir enumerates through properties of the current object.
  * @param obj {Object} the object to enumerate
@@ -186,17 +186,18 @@ Utils.stripTime = function(dt) {
 };
 
 /**
- * @method getDaysInMonth Number of days in the month.
- * @param dt {date} Pass a date object.
- * @return {date} Returns a new date containing the number of days in a month.
- */
-Utils.getDaysInMonth = function(dt) {
-	var nextYear = dt.getMonth() === 11 ? dt.getFullYear()+1 : dt.getFullYear()
-	  , nextMonth = dt.getMonth() === 11 ? 1 : dt.getMonth() + 1
-	  , firstOfNextMonth = new Date(nextYear, nextMonth, 1);
-	
-	return new Date(firstOfNextMonth.getTime() - 86400000).getDate();
-};
+* @method getDaysInMonth Number of days in the month.
+* @param dt {date} Pass a date object.
+* @return {date} Returns a new date containing the number of days in a month.
+*/
+Utils.getDaysInMonth = function (dt) {
+	var nextYear = dt.getMonth() === 11 ? dt.getFullYear() + 1 : dt.getFullYear()
+	 , nextMonth = dt.getMonth() === 11 ? 1 : dt.getMonth() + 1
+	 , firstOfNextMonth = new Date(nextYear, nextMonth, 1);
+
+	return new Date(firstOfNextMonth.getFullYear(), firstOfNextMonth.getMonth(), firstOfNextMonth.getDate() - 1).getDate();
+//    return new Date(firstOfNextMonth.getTime() - 86400000).getDate();
+}
 
 /**
  * @method makeDays Dynamically creates days.
@@ -260,15 +261,16 @@ Utils.makeYearMonths = function(periodCount) {
 };
 
 /**
- * @method addDays Adds a day(s) to the date passed by the dt parameter.
- * @param dt {date} Pass a date object.
- * @param days {number} 
- * @return {date} Returns a new date with the added day(s).
- */
-Utils.addDays = function(dt, days) {
+* @method addDays Adds a day(s) to the date passed by the dt parameter.
+* @param dt {date} Pass a date object.
+* @param days {number} 
+* @return {date} Returns a new date with the added day(s).
+*/
+Utils.addDays = function (dt, days) {
 	var newDate = new Date(dt);
-	for (var i=0;i < days;i++) {
-		newDate = new Date((newDate.getTime() + 86400000));
+	for (var i = 0; i < days; i++) {
+		newDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate() + 1)
+		//newDate = new Date((newDate.getTime() + 86400000));
 	}
 	return newDate;
 };
